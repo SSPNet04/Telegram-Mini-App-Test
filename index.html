@@ -71,11 +71,11 @@
         tg.close();
       }
 
-      if(count > 5 && !tg.isFullscreen()){
+      if(count > 5 && !tg.isFullscreen){
         tg.requestFullscreen();
       }
 
-      if(count <= 5 && tg.isFullscreen()){
+      if(count <= 5 && tg.isFullscreen){
         tg.exitFullscreen();
       }
     }
