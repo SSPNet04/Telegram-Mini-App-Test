@@ -40,6 +40,8 @@
 </head>
 
 <body>
+  <h2><span id="version">Test</span></h2>
+  <h2><span id="platform">Test</span></h2>
   <h1>Counter App</h1>
 
   <div class="counter" id="count">0</div>
@@ -52,6 +54,10 @@
   <script>
     // Initialize Telegram Mini App
     const tg = window.Telegram.WebApp;
+    let version = tg.version;
+    let platform = tg.platform;
+    document.getElementById("version").innerText = "Version: " + version;
+    document.getElementById("platform").innerText = "Platform: " + platform;
     tg.ready();
 
     let count = 0;
@@ -60,14 +66,30 @@
       document.getElementById("count").innerText = count;
     }
 
+    function statusCheck(){
+      if(count > 10){ 
+        tg.close();
+      }
+
+      if(count > 5 && !tg.isFullscreen()){
+        tg.requestFullscreen();
+      }
+
+      if(count <= 5 && tg.isFullscreen()){
+        tg.exitFullscreen();
+      }
+    }
+
     function increase() {
       count++;
       updateUI();
+      statusCheck();
     }
 
     function decrease() {
       count--;
       updateUI();
+      statusCheck();
     }
   </script>
 </body>
