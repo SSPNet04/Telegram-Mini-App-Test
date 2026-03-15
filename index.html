@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Telegram Counter Mini App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
 
   <!-- Telegram Mini App SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js?59"></script>
@@ -35,6 +37,10 @@
       padding: 10px 20px;
       margin: 5px;
       cursor: pointer;
+    }
+    
+    html, body {
+      touch-action: manipulation;
     }
   </style>
 </head>
@@ -78,7 +84,7 @@
       debug();
       let current = getCurrentValue();
       let remaining = (earnBudget - budget) + current;
-      
+
       document.getElementById("count").innerText = remaining;
       if(remaining < 0){
         document.getElementById("per_day").innerText = current / remainingDay;
