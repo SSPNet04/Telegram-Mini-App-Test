@@ -40,47 +40,60 @@
 </head>
 
 <body>
-  <h1>Checking App</h1>
-  <div><input type="number" id="current_value"></div>
+  <h1 id="date">Checking App</h1>
+  <div><input oninput="updateUI()" type="number" id="current_value" placeholder="0"></div>
 
   <div class="counter" id="count">0</div>
-
-  <div>
-    <button onclick="update()">Check</button>
-  </div>
+  <div id="per_day"></div>
 
   <script>
     // Initialize Telegram Mini App
     const tg = window.Telegram.WebApp;
-    let today = new Date();
+    const dailyBudget = 200;
+    const maxBudget = 6000;
+
+    let dateToday = new Date();
+    let fullDate = dateToday.toLocaleDateString();
+    document.getElementById("date").innerText = fullDate;
+
+    let today = dateToday.getDate();
+
+    let lastDayOfMonth = new Date(dateToday.getFullYear(),dateToday.getMonth()+1,0);
+    let dayInMonth = lastDayOfMonth.getDate();
+    let remainingDay = dayInMonth - dateToday.getDate();
+
+    const budget = Math.min(dayInMonth * dailyBudget, maxBudget);
+    const earnBudget = today * dailyBudget;
+
     tg.ready();
+    updateUI();
+
+    function debug(){
+      let remaining = (earnBudget - budget) + getCurrentValue();
+      console.log("Remaining: "+remaining);
+      console.log("Earn Budget: "+earnBudget);
+    }
 
     function updateUI() {
-      document.getElementById("count").innerText = ((today.getDate()*200) - 6000) + getCurrentValue();
+      debug();
+      let current = getCurrentValue();
+      let remaining = (earnBudget - budget) + current;
+      
+      document.getElementById("count").innerText = remaining;
+      if(remaining < 0){
+        document.getElementById("per_day").innerText = current / remainingDay;
+      }
+      else{
+        document.getElementById("per_day").innerText = "";
+      }
     }
 
     function getCurrentValue(){
       let currentValue = Number(document.getElementById("current_value").value);
       return currentValue;
     }
+    
 
-    function statusCheck(){
-      if(count > 10){ 
-        tg.close();
-      }
-
-      if(count > 5 && !tg.isFullscreen){
-        tg.requestFullscreen();
-      }
-
-      if(count <= 5 && tg.isFullscreen){
-        tg.exitFullscreen();
-      }
-    }
-
-    function update() {
-      updateUI();
-    }
   </script>
 </body>
 </html>
