@@ -87,7 +87,7 @@
 
       document.getElementById("count").innerText = remaining;
       if(remaining < 0){
-        document.getElementById("per_day").innerText = current / remainingDay;
+        document.getElementById("per_day").innerText = current / (remainingDay+1);
       }
       else{
         document.getElementById("per_day").innerText = "";
