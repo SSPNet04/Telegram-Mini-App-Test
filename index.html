@@ -81,17 +81,12 @@
     }
 
     function updateUI() {
-      debug();
+      //debug();
       let current = getCurrentValue();
       let remaining = (earnBudget - budget) + current;
 
       document.getElementById("count").innerText = remaining;
-      if(remaining < 0){
-        document.getElementById("per_day").innerText = current / remainingDay;
-      }
-      else{
-        document.getElementById("per_day").innerText = "";
-      }
+      document.getElementById("per_day").innerText = Math.min(current / remainingDay,200);
     }
 
     function getCurrentValue(){
