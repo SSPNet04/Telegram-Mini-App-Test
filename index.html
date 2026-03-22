@@ -86,7 +86,7 @@
       let remaining = (earnBudget - budget) + current;
 
       document.getElementById("count").innerText = remaining;
-      document.getElementById("per_day").innerText = Math.min(current / remainingDay,200);
+      document.getElementById("per_day").innerText = Math.min(current / (remainingDay+1),200);
     }
 
     function getCurrentValue(){
